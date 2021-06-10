@@ -20,8 +20,15 @@ func initMysql() {
 		fmt.Println("错误详细", err)
 		panic("发送一个致命错误，数据库初始化失败")
 	}
+	//----根据具体情况选择填写----//
 	//ping并处理错误
 	err = db.Ping()
+	//最高开放50条数据库连接
+	db.SetMaxOpenConns(50)
+	//最大空闲连接数
+	db.SetMaxIdleConns(20)
+	//最大连接时间（慎用）
+	//db.SetConnMaxLifetime(time.Second*10)
 	if err != nil {
 		fmt.Println("错误详细：", err)
 		panic("连接数据库失败")
